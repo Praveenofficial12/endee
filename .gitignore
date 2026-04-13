@@ -1,32 +1,30 @@
 
-# Ignore build directory
+# Build and artifacts
 build/
-# Ignore build like directory
 build*/
-# Ignore all files in the build directory
-build/*
-
-# Ignore tests build directory
 tests/build/
 tests/build*/
-
-# Test binaries
 tests/**/ndd_filter_test
 
-# macOS debug symbols
-*.dSYM/
-
-# Sometimes data files are created for tetsing
-data/
-data/*
-
-# VS Code directory
-.vscode/
-.vscode/*
-
-# Frontend
-frontend/
-frontend/*
-
-# DS Store
+# OS Trash
 .DS_Store
+*.dSYM/
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+history.db
+
+# Web App specific (allow our project frontend, ignore generic placeholders)
+# We want to keep the ai-debugging-app folder clean
+.env
+
+# VS Code
+.vscode/
+
+# Endee specific (ignore default data folders if they collide)
+# data/
+# data/*

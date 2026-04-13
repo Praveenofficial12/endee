@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Debugging App</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- FontAwesome Basics -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-img">
+
+    <div class="dashboard-layout">
+        
+        <!-- SIDEBAR (History & Nav) -->
+        <aside class="sidebar glass-morphism">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                    <h2>AI Debugging App</h2>
+                    <p class="tagline">Neural RAG Engine</p>
+                </div>
+            </div>
+
+            <button class="btn btn-new" id="new-analysis-btn">
+                <i class="fa-solid fa-plus"></i> New Analysis
+            </button>
+
+            <div class="sidebar-section">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent History</h3>
+                <ul class="history-list" id="history-list">
+                    <!-- History injected via JS -->
+                </ul>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="dot live"></span> Model Server: Connected
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-panel">
+            <header class="topbar glass-morphism">
+                <div class="title-area">
+                    <h1>Workspace</h1>
+                    <span class="badge"><i class="fa-solid fa-bolt"></i> GPU Accelerated Vector DB</span>
+                </div>
+                <div class="actions-area">
+                    <button class="icon-btn" title="Settings"><i class="fa-solid fa-gear"></i></button>
+                    <a href="/database" target="_blank" class="icon-btn" title="View Database"><i class="fa-solid fa-database"></i></a>
+                </div>
+            </header>
+
+            <div class="split-view">
+                
+                <!-- INPUT PANE -->
+                <section class="pane input-pane glass-morphism">
+                    <div class="pane-header">
+                        <h2><i class="fa-solid fa-terminal"></i> Source Input</h2>
+                        <button class="btn-ghost btn-sm" id="upload-btn" title="Upload File">
+                            <i class="fa-solid fa-upload"></i> Load File
+                        </button>
+                        <input type="file" id="file-input" style="display: none;" />
+                    </div>
+                    
+                    <!-- Drag & Drop Zone -->
+                    <div class="dropzone" id="dropzone">
+                        <div class="dropzone-ui">
+                            <i class="fa-solid fa-file-arrow-down fa-3x"></i>
+                            <p>Drop your log, stacktrace, or code file here</p>
+                        </div>
+                        <div class="textarea-wrapper">
+                            <textarea
+                                id="error-input"
+                                placeholder="Paste error messages or buggy code snippet here..."
+                                spellcheck="false"
+                            ></textarea>
+                            <span class="char-count" id="char-count">0 / 5000</span>
+                        </div>
+                    </div>
+
+                    <div class="controls-area">
+                        <div class="samples-wrapper">
+                            <p class="section-label">Quick Scenarios</p>
+                            <div class="samples-grid" id="samples-grid">
+                                <!-- Chips dynamically added -->
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-glow" id="analyze-btn">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> 
+                            <span>Execute Neural RAG</span>
+                            <div class="btn-shine"></div>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- OUTPUT PANE -->
+                <section class="pane output-pane glass-morphism">
+                    <div class="pane-header">
+                        <h2><i class="fa-solid fa-chart-network"></i> Analysis Engine Output</h2>
+                    </div>
+
+                    <div class="output-content">
+                        <!-- EMPTY STATE -->
+                        <div id="empty-state" class="center-content">
+                            <div class="empty-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                            <h3>Awaiting Input</h3>
+                            <p>Submit code or error traces to let the AI agent determine the root cause using Endee vector matching.</p>
+                        </div>
+
+                        <!-- LOADING STATE -->
+                        <div id="loading-state" class="center-content" style="display: none;">
+                            <div class="cyber-spinner">
+                                <div class="ring"></div>
+                                <div class="ring"></div>
+                                <div class="ring"></div>
+                                <i class="fa-solid fa-brain loader-icon"></i>
+                            </div>
+                            <h3 class="gradient-text">Synthesizing...</h3>
+                            <p id="loading-step" class="text-dim">Engaging embedding pipeline</p>
+                            
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="progress-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- RESULTS STATE -->
+                        <div id="results-state" class="results-scroll" style="display: none;">
+                            <!-- Root Cause -->
+                            <div class="result-card cause-card">
+                                <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Root Cause Diagnosis</h3>
+                                <div class="result-body" id="result-explanation"></div>
+                            </div>
+
+                            <!-- Resolution -->
+                            <div class="result-card fix-card">
+                                <h3><i class="fa-solid fa-screwdriver-wrench"></i> Suggested Resolution</h3>
+                                <div class="result-body" id="result-fix"></div>
+                            </div>
+
+                            <!-- Code Block -->
+                            <div class="result-card code-card">
+                                <div class="code-header">
+                                    <h3><i class="fa-solid fa-code"></i> Corrected Output</h3>
+                                    <button class="icon-btn" id="copy-btn" title="Copy to clipboard">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="code-body">
+                                    <pre><code id="result-code" class="hljs"></code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ERROR STATE -->
+                        <div id="error-state" class="center-content text-error" style="display: none;">
+                            <i class="fa-solid fa-triangle-exclamation fa-3x"></i>
+                            <h3>Analysis Failed</h3>
+                            <p id="error-message">Could not connect to the server.</p>
+                            <button class="btn btn-ghost" id="retry-btn" style="margin-top:20px;">Retry Connect</button>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- App Script -->
+    <script src="script.js"></script>
+</body>
+</html>
