@@ -1,0 +1,353 @@
+[
+  {
+    "id": "err_py_001",
+    "language": "Python",
+    "error": "TypeError: can only concatenate str (not \"int\") to str",
+    "error_code": "print('Age: ' + 25)",
+    "explanation": "In Python, you cannot directly concatenate a string with an integer using the '+' operator. Python is strongly typed and does not perform implicit type conversion between strings and integers during concatenation.",
+    "fix": "Convert the integer to a string using str() before concatenation, or use an f-string for string interpolation.",
+    "corrected_code": "# Option 1: Using str()\nprint('Age: ' + str(25))\n\n# Option 2: Using f-string (recommended)\nprint(f'Age: {25}')"
+  },
+  {
+    "id": "err_py_002",
+    "language": "Python",
+    "error": "IndentationError: unexpected indent",
+    "error_code": "def greet():\n    print('Hello')\n        print('World')",
+    "explanation": "Python uses indentation to define code blocks. The second print statement has an extra level of indentation that doesn't correspond to any new block (like if, for, while, etc.), making it syntactically invalid.",
+    "fix": "Ensure all statements at the same logical level share the same indentation depth. Remove the extra indentation from the second print statement.",
+    "corrected_code": "def greet():\n    print('Hello')\n    print('World')"
+  },
+  {
+    "id": "err_py_003",
+    "language": "Python",
+    "error": "IndexError: list index out of range",
+    "error_code": "fruits = ['apple', 'banana', 'cherry']\nprint(fruits[3])",
+    "explanation": "Python lists are zero-indexed, meaning the first element is at index 0. A list with 3 elements has valid indices 0, 1, 2. Accessing index 3 is out of bounds and raises an IndexError.",
+    "fix": "Use a valid index within the range of the list. For a list of length n, valid indices are 0 to n-1. You can also use negative indexing (e.g., -1 for the last element).",
+    "corrected_code": "fruits = ['apple', 'banana', 'cherry']\nprint(fruits[2])   # Access last element by index\nprint(fruits[-1])  # Or use negative indexing"
+  },
+  {
+    "id": "err_py_004",
+    "language": "Python",
+    "error": "KeyError: 'address'",
+    "error_code": "user = {'name': 'Alice', 'age': 30}\nprint(user['address'])",
+    "explanation": "A KeyError is raised when you try to access a dictionary key that does not exist. The dictionary 'user' only has 'name' and 'age' keys — 'address' was never defined.",
+    "fix": "Use the dict.get() method with a default value to safely access keys, or check if the key exists using 'in' before accessing it.",
+    "corrected_code": "user = {'name': 'Alice', 'age': 30}\n\n# Option 1: Use .get() with a default\nprint(user.get('address', 'N/A'))\n\n# Option 2: Check before accessing\nif 'address' in user:\n    print(user['address'])\nelse:\n    print('Address not found')"
+  },
+  {
+    "id": "err_py_005",
+    "language": "Python",
+    "error": "AttributeError: 'NoneType' object has no attribute 'append'",
+    "error_code": "result = [1, 2, 3].sort()\nresult.append(4)",
+    "explanation": "The list.sort() method sorts the list in-place and returns None (not the sorted list). Assigning its return value to 'result' makes result = None. Calling .append() on None raises an AttributeError.",
+    "fix": "Either sort the list in-place and keep a reference to the original list, or use the built-in sorted() function which returns a new sorted list.",
+    "corrected_code": "# Option 1: Sort in-place\nresult = [1, 2, 3]\nresult.sort()\nresult.append(4)\n\n# Option 2: Use sorted() to get a new list\nresult = sorted([1, 2, 3])\nresult.append(4)"
+  },
+  {
+    "id": "err_py_006",
+    "language": "Python",
+    "error": "SyntaxError: invalid syntax (missing colon after if)",
+    "error_code": "x = 10\nif x > 5\n    print('x is greater than 5')",
+    "explanation": "In Python, compound statements like if, for, while, and def require a colon (:) at the end of the header line. The missing colon after the condition causes a SyntaxError.",
+    "fix": "Add a colon (:) at the end of the if statement line.",
+    "corrected_code": "x = 10\nif x > 5:\n    print('x is greater than 5')"
+  },
+  {
+    "id": "err_py_007",
+    "language": "Python",
+    "error": "ModuleNotFoundError: No module named 'requests'",
+    "error_code": "import requests\nresponse = requests.get('https://api.example.com')",
+    "explanation": "The 'requests' library is not part of Python's standard library — it must be installed separately. This error occurs when you try to import a package that hasn't been installed in your Python environment.",
+    "fix": "Install the missing module using pip, your Python package manager.",
+    "corrected_code": "# First install the package in your terminal:\n# pip install requests\n\nimport requests\nresponse = requests.get('https://api.example.com')\nprint(response.status_code)"
+  },
+  {
+    "id": "err_py_008",
+    "language": "Python",
+    "error": "RecursionError: maximum recursion depth exceeded",
+    "error_code": "def factorial(n):\n    return n * factorial(n - 1)\n\nprint(factorial(5))",
+    "explanation": "The recursive function lacks a base case to stop the recursion. Without a terminating condition (e.g., when n <= 1), the function calls itself infinitely until Python's recursion limit is hit (default 1000).",
+    "fix": "Add a base case that returns a value without making a recursive call. For factorial, the base case is when n is 0 or 1.",
+    "corrected_code": "def factorial(n):\n    if n <= 1:       # Base case\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))  # Output: 120"
+  },
+  {
+    "id": "err_py_009",
+    "language": "Python",
+    "error": "SyntaxError: EOL while scanning string literal",
+    "error_code": "print(Hello, World!\")\n\ndef main():\n    print(Hello, World!\")\n\nif __name__ == \"__main__\":\n    main()",
+    "explanation": "The string literal is missing its opening quotation mark. Python expects strings to be enclosed in matching quotes — either both single quotes ('...') or both double quotes (\"...\"). Writing print(Hello, World!\") has no opening quote before 'Hello', so Python cannot parse it as a valid string and raises a SyntaxError.",
+    "fix": "Add the missing opening double quote before 'Hello' so the string is properly enclosed in matching quotation marks.",
+    "corrected_code": "print(\"Hello, World!\")\n\ndef main():\n    print(\"Hello, World!\")\n\nif __name__ == \"__main__\":\n    main()"
+  },
+  {
+    "id": "err_py_010",
+    "language": "Python",
+    "error": "SyntaxError: unterminated string literal",
+    "error_code": "message = \"Hello World\nprint(message)",
+    "explanation": "The string literal is missing its closing quotation mark. Python strings must begin and end with matching quotes on the same line (unless using triple quotes for multi-line strings). The missing closing quote causes Python to treat the rest of the line (and beyond) as part of the string.",
+    "fix": "Add the missing closing double quote at the end of the string. If you need a multi-line string, use triple quotes (\"\"\"...\"\"\") instead.",
+    "corrected_code": "# Fix: Add closing quote\nmessage = \"Hello World\"\nprint(message)\n\n# For multi-line strings, use triple quotes:\nmulti_line = \"\"\"Hello\nWorld\"\"\"\nprint(multi_line)"
+  },
+  {
+    "id": "err_py_011",
+    "language": "Python",
+    "error": "SyntaxError: mismatched quotes in string",
+    "error_code": "name = 'Alice\"\nprint(name)",
+    "explanation": "The string starts with a single quote (') but ends with a double quote (\"). Python requires matching quote characters — strings opened with a single quote must close with a single quote, and strings opened with a double quote must close with a double quote.",
+    "fix": "Use matching quotation marks. Either both single quotes or both double quotes.",
+    "corrected_code": "# Option 1: Both single quotes\nname = 'Alice'\nprint(name)\n\n# Option 2: Both double quotes\nname = \"Alice\"\nprint(name)"
+  },
+  {
+    "id": "err_py_012",
+    "language": "Python",
+    "error": "SyntaxError: unmatched parenthesis or bracket",
+    "error_code": "numbers = [1, 2, 3\nprint(sum(numbers)",
+    "explanation": "The list literal is missing its closing bracket ']'. Python's parser continues looking for the closing bracket and runs into the next line, causing a SyntaxError. Additionally, the print statement is missing its closing parenthesis.",
+    "fix": "Add the missing closing bracket ']' to the list and the missing closing parenthesis ')' to the print/sum call.",
+    "corrected_code": "numbers = [1, 2, 3]\nprint(sum(numbers))"
+  },
+  {
+    "id": "err_py_013",
+    "language": "Python",
+    "error": "SyntaxError: missing opening quote in print statement",
+    "error_code": "print(Hello World)",
+    "explanation": "The argument to print() is not enclosed in quotes, so Python interprets 'Hello' and 'World' as variable names rather than a string. Since these variables are not defined, this causes a NameError or SyntaxError. All string literals must be enclosed in quotes.",
+    "fix": "Enclose the text in matching quotation marks (single or double quotes) to make it a proper string literal.",
+    "corrected_code": "# Fix: Add quotes around the string\nprint(\"Hello World\")\n\n# Also valid:\nprint('Hello World')"
+  },
+  {
+    "id": "err_py_014",
+    "language": "Python",
+    "error": "NameError: name 'hello' is not defined",
+    "error_code": "print(hello)",
+    "explanation": "Python is treating 'hello' as a variable name because it is not enclosed in quotes. Since no variable named 'hello' has been defined, Python raises a NameError. If you intended to print the text 'hello', it must be a string literal wrapped in quotes.",
+    "fix": "Wrap the text in quotes to make it a string literal, or define the variable before using it.",
+    "corrected_code": "# If you want to print the text:\nprint(\"hello\")\n\n# If you want to use a variable:\nhello = \"Hello, World!\"\nprint(hello)"
+  },
+  {
+    "id": "err_py_015",
+    "language": "Python",
+    "error": "SyntaxError: invalid character in identifier",
+    "error_code": "print(\u201cHello World\u201d)",
+    "explanation": "The code uses Unicode 'smart quotes' or 'curly quotes' (\u201c \u201d) instead of standard ASCII straight quotes (\" \"). This often happens when code is copied from a word processor, PDF, or rich-text editor. Python only recognizes standard ASCII quotes.",
+    "fix": "Replace the curly/smart quotes with standard straight double quotes (\") or single quotes (').",
+    "corrected_code": "# Fix: Use standard straight quotes\nprint(\"Hello World\")\n\n# Also valid with single quotes:\nprint('Hello World')"
+  },
+  {
+    "id": "err_py_016",
+    "language": "Python",
+    "error": "SyntaxError: f-string expression part cannot include a backslash",
+    "error_code": "name = \"Alice\"\nprint(f\"Hello, {name + '\\n'}\")",
+    "explanation": "In Python, f-string expressions (the parts inside {}) cannot contain backslash characters directly. This is a deliberate restriction to prevent confusing escape sequences inside f-string expressions.",
+    "fix": "Assign the expression containing the backslash to a variable first, then use that variable inside the f-string.",
+    "corrected_code": "name = \"Alice\"\nnewline = '\\n'\nprint(f\"Hello, {name + newline}\")\n\n# Or use concatenation:\nprint(f\"Hello, {name}\" + \"\\n\")"
+  },
+  {
+    "id": "err_py_017",
+    "language": "Python",
+    "error": "ValueError: invalid literal for int() with base 10",
+    "error_code": "user_input = \"hello\"\nnumber = int(user_input)",
+    "explanation": "The int() function can only convert strings that represent valid integer numbers. The string 'hello' is not a number, so Python raises a ValueError. This commonly occurs when processing user input without validation.",
+    "fix": "Validate the input before converting, or use try/except to handle invalid input gracefully.",
+    "corrected_code": "user_input = \"hello\"\n\n# Option 1: Try/except\ntry:\n    number = int(user_input)\n    print(f\"Number: {number}\")\nexcept ValueError:\n    print(f\"'{user_input}' is not a valid number\")\n\n# Option 2: Check with isdigit()\nif user_input.isdigit():\n    number = int(user_input)\nelse:\n    print(f\"'{user_input}' is not a valid number\")"
+  },
+  {
+    "id": "err_py_018",
+    "language": "Python",
+    "error": "TypeError: 'str' object is not callable",
+    "error_code": "str = \"Hello\"\nresult = str(42)",
+    "explanation": "The built-in function str() has been shadowed by assigning a string value to a variable named 'str'. Now 'str' refers to the string \"Hello\" instead of the built-in str() function, so calling str(42) tries to call a string as if it were a function.",
+    "fix": "Do not use Python built-in names (str, list, int, dict, etc.) as variable names. Rename the variable to something descriptive.",
+    "corrected_code": "# Fix: Use a different variable name\ngreeting = \"Hello\"\nresult = str(42)  # Now str() works correctly\nprint(result)"
+  },
+  {
+    "id": "err_py_019",
+    "language": "Python",
+    "error": "FileNotFoundError: No such file or directory",
+    "error_code": "with open('data.txt', 'r') as f:\n    content = f.read()",
+    "explanation": "The file 'data.txt' does not exist at the specified path, or the path is incorrect relative to the current working directory. Python cannot open a file that doesn't exist for reading.",
+    "fix": "Verify the file path is correct, check if the file exists before opening, or handle the error with try/except.",
+    "corrected_code": "import os\n\nfilepath = 'data.txt'\n\n# Option 1: Check existence first\nif os.path.exists(filepath):\n    with open(filepath, 'r') as f:\n        content = f.read()\nelse:\n    print(f\"File '{filepath}' not found\")\n\n# Option 2: Try/except\ntry:\n    with open(filepath, 'r') as f:\n        content = f.read()\nexcept FileNotFoundError:\n    print(f\"File '{filepath}' not found\")"
+  },
+  {
+    "id": "err_py_020",
+    "language": "Python",
+    "error": "ZeroDivisionError: division by zero",
+    "error_code": "total = 100\ncount = 0\naverage = total / count",
+    "explanation": "Division by zero is mathematically undefined. When the denominator (divisor) is zero, Python raises a ZeroDivisionError. This commonly occurs when computing averages or ratios without checking if the denominator is zero.",
+    "fix": "Check if the denominator is zero before performing division, or use try/except to handle the error.",
+    "corrected_code": "total = 100\ncount = 0\n\n# Option 1: Guard clause\nif count != 0:\n    average = total / count\nelse:\n    average = 0\n    print(\"Cannot divide by zero\")\n\n# Option 2: Try/except\ntry:\n    average = total / count\nexcept ZeroDivisionError:\n    average = 0\n    print(\"Cannot divide by zero\")\n\nprint(f\"Average: {average}\")"
+  },
+  {
+    "id": "err_js_001",
+    "language": "JavaScript",
+    "error": "TypeError: Cannot read properties of undefined (reading 'map')",
+    "error_code": "const data = undefined;\nconst items = data.map(item => item.name);",
+    "explanation": "The variable 'data' is undefined, and you cannot call .map() on undefined. This commonly happens when data from an API hasn't loaded yet, or when accessing a property that doesn't exist on an object.",
+    "fix": "Add a null/undefined check before calling .map(), or use optional chaining (?.) with a fallback. Initialize the variable with an empty array as a default.",
+    "corrected_code": "const data = undefined;\n\n// Option 1: Optional chaining with fallback\nconst items = (data ?? []).map(item => item.name);\n\n// Option 2: Guard clause\nconst items2 = data ? data.map(item => item.name) : [];\n\n// Option 3: Default value at declaration\nconst safeData = data || [];\nconst items3 = safeData.map(item => item.name);"
+  },
+  {
+    "id": "err_js_002",
+    "language": "JavaScript",
+    "error": "ReferenceError: x is not defined",
+    "error_code": "function calculate() {\n    let result = x + 10;\n    return result;\n}\ncalculate();",
+    "explanation": "The variable 'x' has not been declared or defined in the scope of the function or any accessible outer scope. JavaScript cannot resolve the reference, so it throws a ReferenceError.",
+    "fix": "Declare and initialize the variable 'x' before using it, either as a parameter, a local variable, or ensure it's accessible from an outer scope.",
+    "corrected_code": "function calculate(x) {\n    let result = x + 10;\n    return result;\n}\nconsole.log(calculate(5)); // Output: 15"
+  },
+  {
+    "id": "err_js_003",
+    "language": "JavaScript",
+    "error": "SyntaxError: Unexpected token ')'",
+    "error_code": "function greet(name) {\n    console.log('Hello, ' + name)\n})\n",
+    "explanation": "There is an extra closing parenthesis ')' after the function body's closing brace '}'. This creates a syntax error because the parser encounters an unexpected token.",
+    "fix": "Remove the extra closing parenthesis after the function's closing brace.",
+    "corrected_code": "function greet(name) {\n    console.log('Hello, ' + name);\n}\n\ngreet('World');"
+  },
+  {
+    "id": "err_js_004",
+    "language": "JavaScript",
+    "error": "TypeError: Assignment to constant variable",
+    "error_code": "const PI = 3.14;\nPI = 3.14159;",
+    "explanation": "Variables declared with 'const' cannot be reassigned after initialization. Once a const variable is set, its binding is immutable. Attempting to assign a new value throws a TypeError.",
+    "fix": "Use 'let' instead of 'const' if the variable needs to be reassigned. Reserve 'const' for values that should remain constant throughout the program.",
+    "corrected_code": "// If the value needs to change, use 'let'\nlet pi = 3.14;\npi = 3.14159;\nconsole.log(pi);\n\n// If it should stay constant, don't reassign\nconst PI = 3.14159;\nconsole.log(PI);"
+  },
+  {
+    "id": "err_js_005",
+    "language": "JavaScript",
+    "error": "Uncaught (in promise) TypeError: Failed to fetch",
+    "error_code": "fetch('http://localhost:3000/api/data')\n    .then(res => res.json())\n    .then(data => console.log(data));",
+    "explanation": "This error typically occurs when: (1) the server at the specified URL is not running, (2) there's a CORS policy blocking the request, or (3) the URL is incorrect. The fetch API cannot establish a connection to the server.",
+    "fix": "Ensure the server is running, the URL is correct, and CORS is properly configured on the server. Always add error handling with .catch() or try/catch with async/await.",
+    "corrected_code": "// With proper error handling\nfetch('http://localhost:3000/api/data')\n    .then(res => {\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        return res.json();\n    })\n    .then(data => console.log(data))\n    .catch(err => console.error('Fetch failed:', err.message));\n\n// Or using async/await (recommended)\nasync function fetchData() {\n    try {\n        const res = await fetch('http://localhost:3000/api/data');\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        const data = await res.json();\n        console.log(data);\n    } catch (err) {\n        console.error('Fetch failed:', err.message);\n    }\n}"
+  },
+  {
+    "id": "err_js_006",
+    "language": "JavaScript",
+    "error": "TypeError: Cannot read properties of null (reading 'addEventListener')",
+    "error_code": "const btn = document.getElementById('submit-btn');\nbtn.addEventListener('click', handleSubmit);",
+    "explanation": "document.getElementById() returns null when no element with the specified ID exists in the DOM. This often happens when the script runs before the DOM is fully loaded, or the ID is misspelled.",
+    "fix": "Ensure the script runs after the DOM is loaded using DOMContentLoaded event or by placing the script at the end of the body. Also verify the element ID is correct.",
+    "corrected_code": "// Option 1: Wait for DOM to load\ndocument.addEventListener('DOMContentLoaded', () => {\n    const btn = document.getElementById('submit-btn');\n    if (btn) {\n        btn.addEventListener('click', handleSubmit);\n    } else {\n        console.warn('Button not found in DOM');\n    }\n});\n\n// Option 2: Use optional chaining\nconst btn = document.getElementById('submit-btn');\nbtn?.addEventListener('click', handleSubmit);"
+  },
+  {
+    "id": "err_js_007",
+    "language": "JavaScript",
+    "error": "TypeError: items.forEach is not a function",
+    "error_code": "const items = document.querySelectorAll('.item');\nitems.forEach(item => item.classList.add('active'));",
+    "explanation": "While modern browsers support forEach on NodeList, older browsers do not. Additionally, this error can occur when 'items' is not iterable (e.g., it's an HTMLCollection from getElementsByClassName which does NOT have forEach).",
+    "fix": "Convert the NodeList or HTMLCollection to an array using Array.from() or the spread operator, or use a standard for loop.",
+    "corrected_code": "const items = document.querySelectorAll('.item');\n\n// Option 1: Array.from() (works everywhere)\nArray.from(items).forEach(item => item.classList.add('active'));\n\n// Option 2: Spread operator\n[...items].forEach(item => item.classList.add('active'));\n\n// Option 3: Classic for loop (most compatible)\nfor (let i = 0; i < items.length; i++) {\n    items[i].classList.add('active');\n}"
+  },
+  {
+    "id": "err_js_008",
+    "language": "JavaScript",
+    "error": "SyntaxError: missing opening quote in string",
+    "error_code": "console.log(Hello, World!\")",
+    "explanation": "The string argument is missing its opening quotation mark. JavaScript expects strings to be enclosed in matching quotes — either single quotes ('...'), double quotes (\"...\"), or backticks (`...`). Without the opening quote, the parser cannot identify the text as a string literal.",
+    "fix": "Add the missing opening quotation mark before the string text so it is properly enclosed.",
+    "corrected_code": "// Fix: Add the opening double quote\nconsole.log(\"Hello, World!\")\n\n// Also valid with single quotes:\nconsole.log('Hello, World!')\n\n// Also valid with template literals:\nconsole.log(`Hello, World!`)"
+  },
+  {
+    "id": "err_java_001",
+    "language": "Java",
+    "error": "NullPointerException",
+    "error_code": "String name = null;\nint length = name.length();",
+    "explanation": "A NullPointerException occurs when you try to call a method or access a property on a null reference. The variable 'name' is null, and calling .length() on null is not allowed in Java.",
+    "fix": "Always check for null before calling methods on objects, or initialize variables with a non-null default value. In modern Java, consider using Optional<T>.",
+    "corrected_code": "// Option 1: Null check\nString name = null;\nif (name != null) {\n    int length = name.length();\n    System.out.println(length);\n} else {\n    System.out.println(\"Name is null\");\n}\n\n// Option 2: Default value\nString name2 = (name != null) ? name : \"\";\nint length2 = name2.length();\n\n// Option 3: Using Optional (Java 8+)\nimport java.util.Optional;\nOptional<String> optName = Optional.ofNullable(name);\nint length3 = optName.map(String::length).orElse(0);"
+  },
+  {
+    "id": "err_java_002",
+    "language": "Java",
+    "error": "ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 3",
+    "error_code": "int[] numbers = {10, 20, 30};\nSystem.out.println(numbers[5]);",
+    "explanation": "Java arrays are zero-indexed with valid indices from 0 to length-1. An array of length 3 has indices 0, 1, and 2. Accessing index 5 exceeds the bounds and throws ArrayIndexOutOfBoundsException.",
+    "fix": "Ensure the index is within the valid range (0 to array.length - 1). Add bounds checking before accessing array elements.",
+    "corrected_code": "int[] numbers = {10, 20, 30};\n\n// Safe access with bounds check\nint index = 5;\nif (index >= 0 && index < numbers.length) {\n    System.out.println(numbers[index]);\n} else {\n    System.out.println(\"Index \" + index + \" is out of bounds. Array length: \" + numbers.length);\n}\n\n// Access valid element\nSystem.out.println(numbers[2]); // Output: 30"
+  },
+  {
+    "id": "err_java_003",
+    "language": "Java",
+    "error": "error: incompatible types: String cannot be converted to int",
+    "error_code": "int number = \"42\";",
+    "explanation": "Java is statically typed and does not allow implicit type conversion from String to int. Unlike dynamically typed languages, you must explicitly parse the String to an integer.",
+    "fix": "Use Integer.parseInt() to convert the string representation of a number to an int, or use Integer.valueOf() to get an Integer object.",
+    "corrected_code": "// Option 1: Parse to primitive int\nint number = Integer.parseInt(\"42\");\n\n// Option 2: Parse to Integer object\nInteger numberObj = Integer.valueOf(\"42\");\n\n// With error handling\ntry {\n    int number2 = Integer.parseInt(\"42\");\n    System.out.println(number2);\n} catch (NumberFormatException e) {\n    System.out.println(\"Invalid number format: \" + e.getMessage());\n}"
+  },
+  {
+    "id": "err_java_004",
+    "language": "Java",
+    "error": "error: ';' expected",
+    "error_code": "int x = 10\nSystem.out.println(x);",
+    "explanation": "Java requires a semicolon (;) at the end of every statement. The first line is missing its terminating semicolon, causing a compilation error.",
+    "fix": "Add a semicolon at the end of the variable declaration statement.",
+    "corrected_code": "int x = 10;\nSystem.out.println(x);"
+  },
+  {
+    "id": "err_java_005",
+    "language": "Java",
+    "error": "ConcurrentModificationException",
+    "error_code": "List<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nfor (String item : list) {\n    if (item.equals(\"b\")) {\n        list.remove(item);\n    }\n}",
+    "explanation": "Modifying a collection (adding/removing elements) while iterating over it with a for-each loop throws a ConcurrentModificationException. The iterator detects structural modification and fails fast.",
+    "fix": "Use an Iterator explicitly and call iterator.remove(), or use removeIf() (Java 8+), or collect items to remove and process them after the loop.",
+    "corrected_code": "import java.util.*;\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\n\n// Option 1: Using removeIf (Java 8+, cleanest)\nlist.removeIf(item -> item.equals(\"b\"));\n\n// Option 2: Using explicit Iterator\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    if (it.next().equals(\"b\")) {\n        it.remove();\n    }\n}"
+  },
+  {
+    "id": "err_py_021",
+    "language": "Python",
+    "error": "SyntaxError: missing closing parenthesis",
+    "error_code": "print(\"Hello, World!\"\nx = 5",
+    "explanation": "The print() function call is missing its closing parenthesis. Python's parser continues to the next line looking for the closing ')' and encounters unexpected code, causing a SyntaxError.",
+    "fix": "Add the missing closing parenthesis to the print() function call.",
+    "corrected_code": "print(\"Hello, World!\")\nx = 5"
+  },
+  {
+    "id": "err_py_022",
+    "language": "Python",
+    "error": "UnboundLocalError: local variable referenced before assignment",
+    "error_code": "x = 10\ndef increment():\n    x = x + 1\n    return x\nprint(increment())",
+    "explanation": "Inside the function, the assignment 'x = x + 1' makes Python treat 'x' as a local variable. But the right side 'x + 1' tries to read the local 'x' before it's been assigned, causing an UnboundLocalError. The global 'x' is shadowed by the local assignment.",
+    "fix": "Use the 'global' keyword to reference the outer variable, or pass 'x' as a parameter to avoid the ambiguity.",
+    "corrected_code": "x = 10\n\n# Option 1: Use global keyword\ndef increment_global():\n    global x\n    x = x + 1\n    return x\n\n# Option 2: Pass as parameter (recommended)\ndef increment(value):\n    return value + 1\n\nprint(increment(x))  # Output: 11"
+  },
+  {
+    "id": "err_py_023",
+    "language": "Python",
+    "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'",
+    "error_code": "age = 25\nmessage = age + \" years old\"",
+    "explanation": "Python does not allow adding an integer to a string using the + operator. The left operand is an int (25) and the right operand is a str (\" years old\"). Python does not perform implicit type conversion for this operation.",
+    "fix": "Convert the integer to a string using str(), or use an f-string or format() method.",
+    "corrected_code": "age = 25\n\n# Option 1: f-string (recommended)\nmessage = f\"{age} years old\"\n\n# Option 2: str() conversion\nmessage = str(age) + \" years old\"\n\n# Option 3: format()\nmessage = \"{} years old\".format(age)\n\nprint(message)"
+  },
+  {
+    "id": "err_py_024",
+    "language": "Python",
+    "error": "ImportError: cannot import name 'function_name' from 'module'",
+    "error_code": "from math import squareroot",
+    "explanation": "The function 'squareroot' does not exist in the 'math' module. The correct function name is 'sqrt'. This error occurs when you try to import a name that doesn't exist in the specified module — usually due to a typo or using the wrong name.",
+    "fix": "Check the correct name of the function/class in the module's documentation. For square root, the correct import is 'sqrt' from 'math'.",
+    "corrected_code": "# Fix: Use the correct function name\nfrom math import sqrt\n\nresult = sqrt(16)\nprint(result)  # Output: 4.0"
+  },
+  {
+    "id": "err_js_009",
+    "language": "JavaScript",
+    "error": "SyntaxError: Unexpected end of input",
+    "error_code": "function add(a, b) {\n    return a + b;\n",
+    "explanation": "The function body is missing its closing curly brace '}'. JavaScript's parser reaches the end of the file while still expecting the function block to be closed, causing a 'Unexpected end of input' SyntaxError.",
+    "fix": "Add the missing closing curly brace '}' to properly close the function body.",
+    "corrected_code": "function add(a, b) {\n    return a + b;\n}\n\nconsole.log(add(3, 5)); // Output: 8"
+  },
+  {
+    "id": "err_js_010",
+    "language": "JavaScript",
+    "error": "TypeError: undefined is not a function",
+    "error_code": "const obj = { name: 'Alice' };\nobj.greet();",
+    "explanation": "The object 'obj' does not have a method called 'greet'. Accessing a non-existent property returns undefined, and trying to call undefined as a function throws a TypeError.",
+    "fix": "Define the method on the object before calling it, or check if the method exists before calling.",
+    "corrected_code": "// Option 1: Define the method\nconst obj = {\n    name: 'Alice',\n    greet() {\n        return `Hello, ${this.name}!`;\n    }\n};\nconsole.log(obj.greet());\n\n// Option 2: Check before calling\nif (typeof obj.greet === 'function') {\n    obj.greet();\n} else {\n    console.log('greet method not found');\n}"
+  }
+]

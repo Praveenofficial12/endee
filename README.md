@@ -26,6 +26,20 @@
 
 # Endee: Open-Source Vector Database for AI Search
 
+> **Note**: This repository is an official fork of [endee-io/endee](https://github.com/endee-io/endee) serving as the base for our AI/ML project submission. 
+> 
+> ## 🚀 Project Submission: AI Debugging Assistant
+> 
+> Located in the [`ai-debugging-app/`](./ai-debugging-app/) directory, the **AI Debugging Assistant** showcases a powerful application of the Endee Vector Database using a **Retrieval-Augmented Generation (RAG)** pipeline.
+> 
+> * **Practical Use Case**: Semantic search + RAG for error debugging.
+> * **Project Overview**: An intelligent agent that resolves code errors across multiple languages by searching a historical knowledge base of error-solution pairs.
+> * **System Design**: FastAPI backend + React/Vanilla UI. Uses local embeddings (`all-MiniLM-L6-v2`) to transform errors into vectors, retrieves context via **Endee Vector DB**, and synthesizes solutions using LLMs.
+> * **Use of Endee**: Endee serves as the core vector backend, providing ultra-low latency semantic search (< 2.5ms) for context injection.
+> * **Setup Instructions**: Follow the [Quick Start Setup](./ai-debugging-app/README.md) inside the project directory.
+> 
+> ---
+
 **Endee** is a high-performance open-source vector database built for AI search and retrieval workloads. It is designed for teams building **RAG pipelines**, **semantic search**, **hybrid search**, recommendation systems, and filtered vector retrieval APIs that need production-oriented performance and control.
 
 Endee combines vector search with filtering, sparse retrieval support, backup workflows, and deployment flexibility across local builds and Docker-based environments. The project is implemented in C++ and optimized for modern CPU targets, including AVX2, AVX512, NEON, and SVE2.

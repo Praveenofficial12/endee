@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # ──────────────────────────────────────────────
+  #  Endee Vector Database
+  # ──────────────────────────────────────────────
+  endee-server:
+    image: endeeio/endee-server:latest
+    container_name: endee-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - endee-data:/data
+    restart: unless-stopped
+    networks:
+      - ai-debugging-network
+
+  # ──────────────────────────────────────────────
+  #  FastAPI Backend
+  # ──────────────────────────────────────────────
+  backend:
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: ai-debug-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENDEE_URL=http://endee-server:8080/api/v1
+      - LLM_MODEL=gpt-3.5-turbo
+      # Pass your API key via env: OPENAI_API_KEY=sk-... docker-compose up
+    depends_on:
+      - endee-server
+    volumes:
+      - ./backend:/app
+      - ./frontend:/app/frontend
+    restart: unless-stopped
+    networks:
+      - ai-debugging-network
+
+volumes:
+  endee-data:
+
+networks:
+  ai-debugging-network:
+    driver: bridge
